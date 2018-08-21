@@ -1,0 +1,19 @@
+{
+  "name": "mtb-riders",
+  "version": "1.0.0",
+  "description": "\"List of mtb riders\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "rest",
+    "api"
+  ],
+  "author": "Alan Sebastian",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
