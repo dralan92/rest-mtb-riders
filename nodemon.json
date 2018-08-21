@@ -1,0 +1,6 @@
+{
+    "env":{
+        "MONGO_ATLAS_PWD":"@susis6IN",
+        "MONGO_ATLAS_USERNAME": "codename100.alan@gmail.com"
+    }
+}

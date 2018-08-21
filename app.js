@@ -3,7 +3,19 @@ const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
+const mongoose = require('mongoose');
+
+
+
 const riderRoutes = require('./api/routes/riders');
+
+
+const dbUSER = "dralan";
+const dbPASS = "dralan";
+mongoose.connect('mongodb+srv://'+dbUSER + ':' +dbPASS+ '@dralan-a7yib.mongodb.net/test?retryWrites=true',
+{ useNewUrlParser: true });
+
+console.log(mongoose.connection.readyState);
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({
