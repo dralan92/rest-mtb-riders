@@ -8,10 +8,17 @@ const Rider = require('../models/rider');
 router.get('/',(req,res,next)=>{
     
     Rider.find()
+    .select('_id username password zip address gender email dateOfBirth phone')
     .exec()
     .then(docs=>{
+        const response = {
+            count: docs.length,
+            products: docs
+
+
+        };
         console.log(docs);
-        res.status(200).json(docs);
+        res.status(200).json(response);
     })
     .catch(err=>{
         console.log(err);
