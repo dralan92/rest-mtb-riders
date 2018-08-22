@@ -3,13 +3,39 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Rider = require('../models/rider');
 
+
+
+router.get('/',(req,res,next)=>{
+    
+    Rider.find()
+    .exec()
+    .then(docs=>{
+        console.log(docs);
+        res.status(200).json(docs);
+    })
+    .catch(err=>{
+        console.log(err);
+        res.status(500).json({
+            error:err
+        });
+    });
+    
+});
+
 router.get('/:riderId',(req,res,next)=>{
     const id = req.params.riderId;
     Rider.findById(id)
     .exec()
     .then(doc=>{
         console.log(doc);
-        res.status(200).json(doc);
+        if(doc){
+            res.status(200).json(doc);
+        }else{
+            res.status(404).json({
+                message: "No valid Entry"
+            });
+        }
+       
     })
     .catch(err=>{
         console.log(err);
@@ -38,7 +64,7 @@ router.post('/',(req,res,next)=>{
         res.status(201).json({
             message: "Handling post request to /riders",
             createdRider: rider
-        });
+        }); 
     })
     .catch( err=>{
         console.log(err);
@@ -46,5 +72,46 @@ router.post('/',(req,res,next)=>{
     
 });
 
+router.patch('/:riderId',(req,res,next)=>{
+    const id = req.params.riderId;
+    const updateOps = {};
+    for(const ops of req.body){
+        updateOps[ops.propName] = ops.value;
+        console.log(ops.propName);
+        console.log(ops.value);
+    }
+    Rider.update({_id:id}, { $set:updateOps})
+    .exec()
+    .then(result=>{
+        console.log(result);
+        res.status(200).json(result); 
+       
+        
+       
+        })
+    .catch(err=>{
+        console.log(err);
+        res.status(500).json({error:err});
+    });
+    
+});
+
+router.delete('/:riderId',(req,res,next)=>{
+    const id = req.params.riderId;
+    Rider.remove({_id:id})
+    .exec()
+    .then(result=>{
+        
+        res.status(200).json(result); 
+       
+        
+       
+        })
+    .catch(err=>{
+        console.log(err);
+        res.status(500).json({error:err});
+    });
+    
+});
 
 module.exports = router;
