@@ -26,7 +26,7 @@ router.get('/',(req,res,next)=>{
                     phone:doc.phone,
                     request:{
                         type: 'GET',
-                        url:'http://localhost:3000/rider/'+ doc._id
+                        url:'http://localhost:3000/riders/'+ doc._id
                     }
                 }
             })
@@ -86,7 +86,22 @@ router.post('/',(req,res,next)=>{
         console.log(result);
         res.status(201).json({
             message: "Handling post request to /riders",
-            createdRider: rider
+            createdRider: {
+                _id: new mongoose.Types.ObjectId(),
+            username: result.username,
+            password: result.password,
+            zip: result.zip,
+            address: result.address,
+
+            gender: result.gender,
+            email: result.email,
+            dateOfBirth: result.dateOfBirth,
+            phone: result.phone,
+            request:{
+                type: 'POST',
+                url:'http://localhost:3000/riders/'+ result._id
+            }
+            }
         }); 
     })
     .catch( err=>{
