@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const Rider = require('../models/rider');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/'});
 
 
 
@@ -67,7 +69,8 @@ router.get('/:riderId',(req,res,next)=>{
     
 });
 //post
-router.post('/',(req,res,next)=>{
+router.post('/',upload.single('riderImage'),(req,res,next)=>{
+    console.log(req.file);
     const rider = new Rider({
         _id: new mongoose.Types.ObjectId(),
         username: req.body.username,
