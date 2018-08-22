@@ -13,7 +13,23 @@ router.get('/',(req,res,next)=>{
     .then(docs=>{
         const response = {
             count: docs.length,
-            products: docs
+            products: docs.map(doc=>{
+                return{
+                    username: doc.username,
+                    password: doc.password,
+                    zip:doc.zip,
+                    address:doc.address,
+
+                    gender:doc.gender,
+                    email:doc.email,
+                    dateOfBirth:doc.dateOfBirth,
+                    phone:doc.phone,
+                    request:{
+                        type: 'GET',
+                        url:'http://localhost:3000/rider/'+ doc._id
+                    }
+                }
+            })
 
 
         };
