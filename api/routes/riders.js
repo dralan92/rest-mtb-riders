@@ -19,6 +19,7 @@ router.get('/',(req,res,next)=>{
             count: docs.length,
             products: docs.map(doc=>{
                 return{
+                    
                     username: doc.username,
                     password: doc.password,
                     zip:doc.zip,
@@ -75,14 +76,14 @@ router.post('/',upload.single('riderImage'),(req,res,next)=>{
     Rider.find({username:req.body.username})
     .exec()
     .then(doc=>{
-        console.log(doc.length + 'riders');
+        //console.log(doc.length + 'riders');
         if(doc.length >= 1){
-            console.log('username already exists');
+            //console.log('username already exists');
             res.status(409).json({
                 message:"Username already exists"
             });
         }else{
-            console.log('user name is NEW');
+           // console.log('user name is NEW');
 
             console.log(req.file);
             const rider = new Rider({
