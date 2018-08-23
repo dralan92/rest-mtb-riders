@@ -3,8 +3,10 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Rider = require('../models/rider');
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/'});
 
+
+
+const upload = multer({ dest: 'uploads/'});
 
 
 router.get('/',(req,res,next)=>{
@@ -70,46 +72,63 @@ router.get('/:riderId',(req,res,next)=>{
 });
 //post
 router.post('/',upload.single('riderImage'),(req,res,next)=>{
-    console.log(req.file);
-    const rider = new Rider({
-        _id: new mongoose.Types.ObjectId(),
-        username: req.body.username,
-        password: req.body.password,
-        zip: req.body.zip,
-        address: req.body.address,
+    Rider.find({username:req.body.username})
+    .exec()
+    .then(doc=>{
+        console.log(doc.length + 'riders');
+        if(doc.length >= 1){
+            console.log('username already exists');
+            res.status(409).json({
+                message:"Username already exists"
+            });
+        }else{
+            console.log('user name is NEW');
 
-        gender: req.body.gender,
-        email: req.body.email,
-        dateOfBirth: req.body.dateOfBirth,
-        phone: req.body.phone
-
-    });
-    rider.save()
-    .then( result=>{
-        console.log(result);
-        res.status(201).json({
-            message: "Handling post request to /riders",
-            createdRider: {
+            console.log(req.file);
+            const rider = new Rider({
                 _id: new mongoose.Types.ObjectId(),
-            username: result.username,
-            password: result.password,
-            zip: result.zip,
-            address: result.address,
-
-            gender: result.gender,
-            email: result.email,
-            dateOfBirth: result.dateOfBirth,
-            phone: result.phone,
-            request:{
-                type: 'POST',
-                url:'http://localhost:3000/riders/'+ result._id
-            }
-            }
-        }); 
-    })
-    .catch( err=>{
-        console.log(err);
+                username: req.body.username,
+                password: req.body.password,
+                zip: req.body.zip,
+                address: req.body.address,
+        
+                gender: req.body.gender,
+                email: req.body.email,
+                dateOfBirth: req.body.dateOfBirth,
+                phone: req.body.phone
+        
+            });
+            rider.save()
+            .then( result=>{
+                console.log(result);
+                res.status(201).json({
+                    message: "Handling post request to /riders",
+                    createdRider: {
+                        _id: new mongoose.Types.ObjectId(),
+                    username: result.username,
+                    password: result.password,
+                    zip: result.zip,
+                    address: result.address,
+        
+                    gender: result.gender,
+                    email: result.email,
+                    dateOfBirth: result.dateOfBirth,
+                    phone: result.phone,
+                    request:{
+                        type: 'POST',
+                        url:'http://localhost:3000/riders/'+ result._id
+                    }
+                    }
+                }); 
+            })
+            .catch( err=>{
+                console.log(err);
+            });
+        }
     });
+   
+
+   
     
 });
 
