@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
-app.use((req, res, next)=>{
+/*app.use((req, res, next)=>{
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', '*');
     
@@ -33,7 +33,7 @@ app.use((req, res, next)=>{
         res.header('Access-Control-Allow-Methods', '*');
         return res.status(200).json({});
     }
-});
+});*/
 
 app.use('/riders', riderRoutes);
 
