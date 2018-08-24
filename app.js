@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 
 const mongoose = require('mongoose');
 
+const cors = require('cors');
+
 
 
 const riderRoutes = require('./api/routes/riders');
@@ -35,6 +37,7 @@ app.use(bodyParser.json());
     }
 });*/
 
+app.use(cors());
 app.use('/riders', riderRoutes);
 
 app.use((req,res,next)=>{
