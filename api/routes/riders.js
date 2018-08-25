@@ -19,7 +19,7 @@ router.get('/',(req,res,next)=>{
             count: docs.length,
             riders: docs.map(doc=>{
                 return{
-                    id:_id,
+                    id:doc._id,
                     username: doc.username,
                     password: doc.password,
                     zip:doc.zip,
@@ -28,11 +28,8 @@ router.get('/',(req,res,next)=>{
                     gender:doc.gender,
                     email:doc.email,
                     dateOfBirth:doc.dateOfBirth,
-                    phone:doc.phone,
-                    request:{
-                        type: 'GET',
-                        url:'https://blooming-mesa-21883.herokuapp.com/riders/'+ doc._id
-                    }
+                    phone:doc.phone
+                   
                 }
             })
 
@@ -115,10 +112,7 @@ router.post('/',upload.single('riderImage'),(req,res,next)=>{
                     email: result.email,
                     dateOfBirth: result.dateOfBirth,
                     phone: result.phone,
-                    request:{
-                        type: 'POST',
-                        url:'https://blooming-mesa-21883.herokuapp.com/riders/'+ result._id
-                    }
+                    
                     }
                 }); 
             })
