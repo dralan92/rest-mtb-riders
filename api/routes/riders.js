@@ -128,19 +128,53 @@ router.post('/',upload.single('riderImage'),(req,res,next)=>{
 });
 
 router.patch('/:riderId',(req,res,next)=>{
+    
     const id = req.params.riderId;
+   
     const updateOps = {};
+
+    /*for(const key of Object.keys(req.body)){
+        console.log(key);
+        value = req.body[key];
+        console.log(value);
+        updateOps[key] = value;
+       
+    }
+    console.log(updateOps);
     for(const ops of req.body){
+       
         updateOps[ops.propName] = ops.value;
         console.log(ops.propName);
         console.log(ops.value);
-    }
-    Rider.update({_id:id}, { $set:updateOps})
+    }*/
+   /*
+                                    username:req.body.username,
+                                    password:req.body.password,
+                                    zip:req.body.zip,
+                                    address:req.body.address,
+                                
+                                    gender:req.body.gender,
+                                    email:req.body.email,
+                                    dateOfBirth:req.body.dateOfBirth,
+                                    phone:req.body.phone
+
+   */
+    Rider.update({_id:id}, { $set:{username:req.body.username,
+        password:req.body.password,
+        zip:req.body.zip,
+        address:req.body.address,
+    
+        gender:req.body.gender,
+        email:req.body.email,
+        dateOfBirth:req.body.dateOfBirth,
+        phone:req.body.phone}
+                                
+                            })
     .exec()
     .then(result=>{
         console.log(result);
         res.status(200).json(result); 
-       
+
         
        
         })
